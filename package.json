@@ -1,12 +1,12 @@
 {
-  "name": "@sdkfabric/{{name}}",
+  "name": "{{name}}",
   "version": "0.0.0",
-  "description": "{{repo_description}}",
+  "description": "{{description}}",
   "license": "MIT",
-  "homepage": "https://sdk-fabric.org",
+  "homepage": "{{website}}",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sdk-fabric/{{repo_name}}"
+    "url": "{{github_url}}"
   },
   "type": "module",
   "main": "./dist/index.cjs",

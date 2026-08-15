@@ -12,5 +12,5 @@ https://app.typehub.cloud/d/{{typehub_user}}/{{typehub_document}}
 ```typescript
 const client = Client::build('[access_token]');
 
-// @TODO use the client
+{{usage}}
 ```

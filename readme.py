@@ -73,9 +73,11 @@ def generate_usage(lock_file_path: Path) -> str:
     lines = []
 
     for op_id, op in operations.items():
-        if "." in op_id:
-            tag, method_raw = op_id.split(".", 1)
-            tag_accessor = f"client.{to_camel_case(tag)}()"
+        parts = op_id.split(".")
+        if len(parts) > 1:
+            tag_chain = ".".join(f"{to_camel_case(p)}()" for p in parts[:-1])
+            tag_accessor = f"client.{tag_chain}"
+            method_raw = parts[-1]
         else:
             method_raw = op_id
             tag_accessor = "client"
@@ -142,7 +144,7 @@ def main() -> None:
     parser.add_argument("--lock-file", type=Path, default=Path("sdkgen.lock"))
     args = parser.parse_args()
 
-    usage_output = generate_ts_usage(args.lock_file)
+    usage_output = generate_usage(args.lock_file)
     print(usage_output)
 
 

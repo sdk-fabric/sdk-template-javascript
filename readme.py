@@ -8,12 +8,15 @@ from pathlib import Path
 
 
 def to_camel_case(name: str) -> str:
-    """Convert snake_case, PascalCase, dot.case, or hyphenated names to camelCase."""
+    """Convert snake_case, PascalCase, dot.case, or hyphenated names to camelCase without ruining existing camelCase."""
     if not name:
         return ""
-    parts = re.split(r"[._-]+", name)
+    s = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", name)
+    parts = [p for p in re.split(r"[._-]+", s) if p]
+    if not parts:
+        return ""
     first = parts[0].lower()
-    rest = "".join(p.capitalize() for p in parts[1:] if p)
+    rest = "".join(p.capitalize() for p in parts[1:])
     return first + rest
 
 
@@ -21,8 +24,9 @@ def to_pascal_case(name: str) -> str:
     """Convert snake_case, camelCase, dot.case, or hyphenated names to PascalCase."""
     if not name:
         return ""
-    parts = re.split(r"[._-]+", name)
-    return "".join(p.capitalize() for p in parts if p)
+    s = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", name)
+    parts = [p for p in re.split(r"[._-]+", s) if p]
+    return "".join(p.capitalize() for p in parts)
 
 
 def map_schema_to_type(schema: dict) -> str:
